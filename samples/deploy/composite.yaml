@@ -431,6 +431,8 @@ spec:
               containerPort: 12379
               protocol: TCP
           env:
+            - name: SERVICE_ID
+              value: api-gateway
             - name: POD_NAMESPACE
               valueFrom:
                 fieldRef:
@@ -462,6 +464,7 @@ spec:
               port: 9080
             timeoutSeconds: 1
           name: apisix
+
           image: apache/apisix
           ports:
             - name: http
