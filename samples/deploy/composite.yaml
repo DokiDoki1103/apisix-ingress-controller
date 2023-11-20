@@ -244,8 +244,14 @@ data:
         timeout: 60
 
     apisix:
+      ssl:
+        enable: true
+        listen:
+          - port: 443
       enable_control: true
       enable_reuseport: true
+      node_listen:
+        - 80
       stream_proxy:
         only: false
         tcp:
@@ -344,7 +350,7 @@ data:
     plugin_attr:
       prometheus:
         enable_export_server: false
-
+        
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -411,16 +417,6 @@ spec:
             - ""
             - "--disable-status-updates=false"
             - "--etcd-server-enabled=true"
-          ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
-            - name: https
-              containerPort: 8443
-              protocol: TCP
-            - name: etcd
-              containerPort: 12379
-              protocol: TCP
           env:
             - name: SERVICE_ID
               value: api-gateway
@@ -443,16 +439,6 @@ spec:
           image: apache/apisix
           securityContext:
             privileged: true
-          ports:
-            - name: http
-              containerPort: 9080
-              protocol: TCP
-            - name: https
-              containerPort: 9443
-              protocol: TCP
-            - name: http-admin
-              containerPort: 9180
-              protocol: TCP
           resources: { }
           volumeMounts:
             - name: apisix-config-yaml-configmap
