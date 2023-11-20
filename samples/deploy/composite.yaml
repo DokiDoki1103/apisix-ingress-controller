@@ -500,7 +500,6 @@ spec:
       dnsPolicy: ClusterFirst
       serviceAccountName: apisix-view-serviceaccount
       serviceAccount: apisix-view-serviceaccount
-      securityContext:
-        privileged: true
+
       schedulerName: default-scheduler
   revisionHistoryLimit: 10
