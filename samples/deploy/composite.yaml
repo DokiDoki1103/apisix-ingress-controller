@@ -399,6 +399,8 @@ spec:
             successThreshold: 1
             failureThreshold: 3
           name: ingress-apisix
+          securityContext:
+            privileged: true
           image: apache/apisix-ingress-controller:1.7.1
           command:
             - /ingress-apisix/apisix-ingress-controller
@@ -467,10 +469,10 @@ spec:
             tcpSocket:
               port: 80
             timeoutSeconds: 1
-
-
           name: apisix
           image: apache/apisix
+          securityContext:
+            privileged: true
           ports:
             - name: http
               containerPort: 80
