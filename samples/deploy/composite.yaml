@@ -377,7 +377,6 @@ spec:
                     values:
                       - 47.236.6.21
       volumes:
-
         - name: apisix-config-yaml-configmap
           configMap:
             name: apisix-gw-config.yaml
@@ -388,22 +387,6 @@ spec:
           image: apache/apisix-ingress-controller:1.7.1
           securityContext:
             privileged: true
-          livenessProbe:
-            tcpSocket:
-              port: 8080
-            initialDelaySeconds: 15
-            timeoutSeconds: 2
-            periodSeconds: 2
-            successThreshold: 1
-            failureThreshold: 3
-          readinessProbe:
-            tcpSocket:
-              port: 8080
-            initialDelaySeconds: 10
-            timeoutSeconds: 2
-            periodSeconds: 10
-            successThreshold: 1
-            failureThreshold: 3
           command:
             - /ingress-apisix/apisix-ingress-controller
             - ingress
@@ -460,22 +443,6 @@ spec:
           image: apache/apisix
           securityContext:
             privileged: true
-          livenessProbe:
-            failureThreshold: 3
-            initialDelaySeconds: 20
-            periodSeconds: 2
-            successThreshold: 1
-            tcpSocket:
-              port: 80
-            timeoutSeconds: 2
-          readinessProbe:
-            failureThreshold: 3
-            initialDelaySeconds: 15
-            periodSeconds: 2
-            successThreshold: 1
-            tcpSocket:
-              port: 80
-            timeoutSeconds: 1
           ports:
             - name: http
               containerPort: 9080
