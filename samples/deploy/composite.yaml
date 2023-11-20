@@ -482,9 +482,6 @@ spec:
             - name: http-admin
               containerPort: 9180
               protocol: TCP
-            - name: https
-              containerPort: 443
-              protocol: TCP
           resources: { }
           volumeMounts:
             - name: wasm
