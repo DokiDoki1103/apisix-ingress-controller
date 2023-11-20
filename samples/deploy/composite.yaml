@@ -458,8 +458,10 @@ spec:
             - name: apisix-config-yaml-configmap
               mountPath: /usr/local/apisix/conf/config.yaml
               subPath: config.yaml
+      hostNetwork: true
       restartPolicy: Always
       terminationGracePeriodSeconds: 0
+
       dnsPolicy: ClusterFirst
 
       serviceAccountName: apisix-view-serviceaccount
