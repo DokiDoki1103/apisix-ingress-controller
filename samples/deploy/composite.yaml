@@ -229,11 +229,6 @@ metadata:
   namespace: ingress-apisix
 data:
   config.yaml: >
-    wasm:
-      plugins:
-        - name: coraza-filter
-          priority: 7999
-          file: /usr/local/bin/coraza-proxy-wasm.wasm
     deployment:
       admin:
         allow_admin:
@@ -372,10 +367,7 @@ spec:
     spec:
 
       volumes:
-        - name: wasm
-          hostPath:
-            path: /root/apisix
-            type: DirectoryOrCreate
+
         - name: apisix-config-yaml-configmap
           configMap:
             name: apisix-gw-config.yaml
