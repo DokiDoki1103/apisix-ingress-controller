@@ -259,7 +259,6 @@ data:
 
 
     plugins: # plugin list (sorted by priority)
-      - coraza-filter
       - real-ip                        # priority: 23000
       - ai                             # priority: 22900
       - client-control                 # priority: 22000
