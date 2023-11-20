@@ -253,10 +253,6 @@ data:
       enable_reuseport: true
       node_listen:
         port: 80
-      ssl:
-        enable: true
-        listen:
-          - port: 443
       stream_proxy:
         only: false
         tcp:
@@ -460,6 +456,7 @@ spec:
 
         - name: apisix
           image: apache/apisix
+
           securityContext:
             privileged: true
           livenessProbe:
@@ -498,6 +495,7 @@ spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 0
       dnsPolicy: ClusterFirst
+
       serviceAccountName: apisix-view-serviceaccount
       serviceAccount: apisix-view-serviceaccount
 
