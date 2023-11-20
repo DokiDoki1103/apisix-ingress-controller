@@ -362,7 +362,20 @@ spec:
       labels:
         app.kubernetes.io/name: ingress-apisix-composite-deployment
     spec:
-
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - 47.236.6.21
+              - matchExpressions:
+                  - key: k3s.io/hostname
+                    operator: In
+                    values:
+                      - 47.236.6.21
       volumes:
 
         - name: apisix-config-yaml-configmap
@@ -445,7 +458,6 @@ spec:
 
         - name: apisix
           image: apache/apisix
-
           securityContext:
             privileged: true
           livenessProbe:
