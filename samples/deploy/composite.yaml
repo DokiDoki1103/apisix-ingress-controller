@@ -251,7 +251,12 @@ data:
     apisix:
       enable_control: true
       enable_reuseport: true
-
+      node_listen:
+        port: 80
+      ssl:
+        enable: true
+        listen:
+          - port: 443
       stream_proxy:
         only: false
         tcp:
@@ -262,7 +267,7 @@ data:
           - 9200
 
 
-    plugins:                          # plugin list (sorted by priority)
+    plugins: # plugin list (sorted by priority)
       - coraza-filter
       - real-ip                        # priority: 23000
       - ai                             # priority: 22900
@@ -442,7 +447,7 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: metadata.name
-          resources: {}
+          resources: { }
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           imagePullPolicy: IfNotPresent
@@ -476,7 +481,7 @@ spec:
             - name: https
               containerPort: 443
               protocol: TCP
-          resources: {}
+          resources: { }
           volumeMounts:
             - name: wasm
               mountPath: /usr/local/bin/
@@ -488,6 +493,6 @@ spec:
       dnsPolicy: ClusterFirst
       serviceAccountName: apisix-view-serviceaccount
       serviceAccount: apisix-view-serviceaccount
-      securityContext: {}
+      securityContext: { }
       schedulerName: default-scheduler
   revisionHistoryLimit: 10
