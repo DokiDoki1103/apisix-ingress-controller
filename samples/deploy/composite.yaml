@@ -447,9 +447,7 @@ spec:
       hostNetwork: true
       restartPolicy: Always
       terminationGracePeriodSeconds: 0
-
       dnsPolicy: ClusterFirst
-
       serviceAccountName: apisix-view-serviceaccount
       serviceAccount: apisix-view-serviceaccount
 
