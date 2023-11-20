@@ -490,30 +490,4 @@ spec:
       serviceAccount: apisix-view-serviceaccount
       securityContext: {}
       schedulerName: default-scheduler
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 50%
   revisionHistoryLimit: 10
-  progressDeadlineSeconds: 600
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: ingress-apisix-gateway
-  namespace: ingress-apisix
-spec:
-  ports:
-    - name: http
-      protocol: TCP
-      port: 80
-      targetPort: 80
-    - name: https
-      protocol: TCP
-      port: 443
-      targetPort: 443
-  selector:
-    app.kubernetes.io/name: ingress-apisix-composite-deployment
-  type: NodePort
