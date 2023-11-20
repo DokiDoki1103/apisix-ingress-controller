@@ -476,8 +476,6 @@ spec:
               protocol: TCP
           resources: { }
           volumeMounts:
-            - name: wasm
-              mountPath: /usr/local/bin/
             - name: apisix-config-yaml-configmap
               mountPath: /usr/local/apisix/conf/config.yaml
               subPath: config.yaml
