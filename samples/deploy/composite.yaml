@@ -436,8 +436,10 @@ spec:
           imagePullPolicy: IfNotPresent
 
         - name: apisix
+
           image: apache/apisix
           securityContext:
+            runAsUser: 0
             privileged: true
           resources: { }
           volumeMounts:
