@@ -354,12 +354,11 @@ data:
 
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
   name: ingress-apisix-composite-deployment
   namespace: ingress-apisix
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: ingress-apisix-composite-deployment
@@ -453,7 +452,7 @@ spec:
             periodSeconds: 2
             successThreshold: 1
             tcpSocket:
-              port: 9080
+              port: 80
             timeoutSeconds: 2
           readinessProbe:
             failureThreshold: 3
@@ -461,20 +460,21 @@ spec:
             periodSeconds: 2
             successThreshold: 1
             tcpSocket:
-              port: 9080
+              port: 80
             timeoutSeconds: 1
-          name: apisix
 
+
+          name: apisix
           image: apache/apisix
           ports:
             - name: http
-              containerPort: 9080
+              containerPort: 80
               protocol: TCP
             - name: http-admin
               containerPort: 9180
               protocol: TCP
             - name: https
-              containerPort: 9443
+              containerPort: 443
               protocol: TCP
           resources: {}
           volumeMounts:
@@ -509,11 +509,11 @@ spec:
     - name: http
       protocol: TCP
       port: 80
-      targetPort: 9080
+      targetPort: 80
     - name: https
       protocol: TCP
       port: 443
-      targetPort: 9443
+      targetPort: 443
   selector:
     app.kubernetes.io/name: ingress-apisix-composite-deployment
   type: NodePort
