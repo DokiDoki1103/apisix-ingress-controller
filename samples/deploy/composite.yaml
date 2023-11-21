@@ -387,7 +387,7 @@ spec:
 
       containers:
         - name: ingress-apisix
-          image: apache/apisix-ingress-controller:1.7.1
+          image: apache/apisix-ingress-controller:1.7.2
           securityContext:
             privileged: true
           command:
