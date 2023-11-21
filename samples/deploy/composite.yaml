@@ -256,6 +256,7 @@ data:
       stream_proxy:
         tcp:
           - addr: "0.0.0.0:7070"
+          - addr: "0.0.0.0:8443"  
 
 
     plugins: # plugin list (sorted by priority)
