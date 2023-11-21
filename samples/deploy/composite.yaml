@@ -402,8 +402,7 @@ spec:
             - ":8080"
             - "--https-listen"
             - ":8443"
-            - "--log_level"
-            - "debug"
+            - "--log_level=debug"
             - "--default-apisix-cluster-name"
             - default
             - "--default-apisix-cluster-base-url"
