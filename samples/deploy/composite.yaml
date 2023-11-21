@@ -244,6 +244,7 @@ data:
         timeout: 60
 
     apisix:
+      proxy_mode: "http&stream"
       ssl:
         enable: true
         listen:
