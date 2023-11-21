@@ -1,0 +1,13 @@
+apiVersion: apisix.apache.org/v2
+kind: ApisixRoute
+metadata:
+  name: tcp-route
+spec:
+  stream:
+    - name: tcp-route-rule
+      protocol: TCP
+      match:
+        ingressPort: 7070
+      backend:
+        serviceName: rbd-app-ui
+        servicePort: 7070

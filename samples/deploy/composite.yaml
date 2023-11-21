@@ -255,11 +255,7 @@ data:
       stream_proxy:
         only: false
         tcp:
-          - 9100
-          - addr: 9110
-            tls: true
-        udp:
-          - 9200
+          - addr: "0.0.0.0:7070"
 
 
     plugins: # plugin list (sorted by priority)
@@ -436,7 +432,6 @@ spec:
           imagePullPolicy: IfNotPresent
 
         - name: apisix
-
           image: apache/apisix
           securityContext:
             runAsUser: 0
