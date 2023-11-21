@@ -258,7 +258,6 @@ data:
         tcp:
           - addr: 7070
           - addr: 8443
-            tls: true
 
 
     plugins: # plugin list (sorted by priority)

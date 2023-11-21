@@ -4,11 +4,17 @@ metadata:
   name: tcp-route
 spec:
   stream:
-    - name: tcp-route-rule
+    - name: rbd-api
+      protocol: TCP
+      match:
+        ingressPort: 8443
+      backend:
+        serviceName: rbd-api-api-inner
+        servicePort: 8888
+    - name: rbd-app-ui
       protocol: TCP
       match:
         ingressPort: 7070
       backend:
         serviceName: rbd-app-ui
         servicePort: 7070
-        resolveGranularity: service
