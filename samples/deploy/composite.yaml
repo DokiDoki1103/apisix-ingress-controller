@@ -256,7 +256,7 @@ data:
         enabled: true
         only: false
         tcp:
-          - addr: 7070
+          - addr: '0.0.0.0:7070'
 
 
     plugins: # plugin list (sorted by priority)
