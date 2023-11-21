@@ -255,8 +255,7 @@ data:
         - 80
       stream_proxy:
         tcp:
-          - addr: 7070
-          - addr: 8443
+          - addr: "0.0.0.0:7070"
 
 
     plugins: # plugin list (sorted by priority)
