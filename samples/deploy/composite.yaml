@@ -402,6 +402,8 @@ spec:
             - ":8080"
             - "--https-listen"
             - ":8443"
+            - "--log_level"
+            - "debug"
             - "--default-apisix-cluster-name"
             - default
             - "--default-apisix-cluster-base-url"
@@ -414,6 +416,8 @@ spec:
             - ""
             - "--disable-status-updates=false"
             - "--etcd-server-enabled=true"
+
+
           env:
             - name: SERVICE_ID
               value: api-gateway
