@@ -254,7 +254,6 @@ data:
       node_listen:
         - 80
       stream_proxy:
-        only: false
         tcp:
           - addr: 7070
           - addr: 8443
@@ -348,7 +347,7 @@ data:
     plugin_attr:
       prometheus:
         enable_export_server: false
-
+        
 ---
 apiVersion: apps/v1
 kind: DaemonSet
