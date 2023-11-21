@@ -11,3 +11,4 @@ spec:
       backend:
         serviceName: rbd-app-ui
         servicePort: 7070
+        resolveGranularity: service
