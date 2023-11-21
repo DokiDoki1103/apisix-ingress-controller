@@ -395,6 +395,8 @@ spec:
             - ingress
             - "--log-output"
             - stdout
+            - "--log-level"
+            - debug
             - "--apisix-resource-sync-interval"
             - 1h
             - "--apisix-resource-sync-comparison=true"
