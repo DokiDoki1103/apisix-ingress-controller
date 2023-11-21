@@ -4,13 +4,6 @@ metadata:
   name: tcp-route
 spec:
   stream:
-    - name: rbd-api
-      protocol: TCP
-      match:
-        ingressPort: 8443
-      backend:
-        serviceName: rbd-api-api-inner
-        servicePort: 8888
     - name: rbd-app-ui
       protocol: TCP
       match:
