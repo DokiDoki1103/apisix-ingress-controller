@@ -258,6 +258,8 @@ data:
         only: false
         tcp:
           - addr: 7070
+          - addr: 8443
+            tls: true
 
 
     plugins: # plugin list (sorted by priority)
@@ -348,7 +350,7 @@ data:
     plugin_attr:
       prometheus:
         enable_export_server: false
-        
+
 ---
 apiVersion: apps/v1
 kind: DaemonSet
