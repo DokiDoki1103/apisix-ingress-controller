@@ -7,7 +7,7 @@ spec:
     - name: rbd-api
       match:
         hosts:
-          - rbd-api-api
+          - rbd-api-api:8443
         paths:
           - /*
       backends:
@@ -16,7 +16,7 @@ spec:
     - name: rbd-app-ui
       match:
         hosts:
-          - 8.130.141.31
+          - 8.130.141.31:7070
         paths:
           - /*
       backends:
@@ -25,7 +25,7 @@ spec:
     - name: rbd-api-healthz
       match:
         hosts:
-          - 8.130.141.31
+          - 8.130.141.31:8889
         paths:
           - /*
       backends:
@@ -34,7 +34,7 @@ spec:
     - name: rbd-ws
       match:
         hosts:
-          - 8.130.141.31
+          - 8.130.141.31:6060
         paths:
           - /*
       backends:
