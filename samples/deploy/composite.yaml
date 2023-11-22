@@ -254,13 +254,11 @@ data:
       enable_reuseport: true
       node_listen:
         - 80
-        - 7070
-        - 8889
-        - 6060
       stream_proxy:
         tcp:
-          - addr: "0.0.0.0:9999"
-
+          - 7070
+          - 8889
+          - 6060
 
     plugins: # plugin list (sorted by priority)
       - real-ip                        # priority: 23000
