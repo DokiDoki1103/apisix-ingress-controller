@@ -256,9 +256,11 @@ data:
         - 80
         - 7070
         - 8889
+        - 6060
+        - 8889
       stream_proxy:
         tcp:
-          - addr: "0.0.0.0:6060"
+          - addr: "0.0.0.0:9999"
 
 
     plugins: # plugin list (sorted by priority)
@@ -367,20 +369,6 @@ spec:
       labels:
         app.kubernetes.io/name: ingress-apisix-composite-deployment
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/hostname
-                    operator: In
-                    values:
-                      - 47.236.6.21
-              - matchExpressions:
-                  - key: k3s.io/hostname
-                    operator: In
-                    values:
-                      - 47.236.6.21
       volumes:
         - name: apisix-config-yaml-configmap
           configMap:
@@ -389,7 +377,7 @@ spec:
 
       containers:
         - name: ingress-apisix
-          image: apache/apisix-ingress-controller:1.7.0
+          image: apache/apisix-ingress-controller:1.7.1
           securityContext:
             privileged: true
           command:
@@ -397,8 +385,6 @@ spec:
             - ingress
             - "--log-output"
             - stdout
-            - "--log-level"
-            - debug
             - "--apisix-resource-sync-interval"
             - 1h
             - "--apisix-resource-sync-comparison=true"
