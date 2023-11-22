@@ -14,9 +14,9 @@ spec:
         - serviceName: rbd-api-api
           servicePort: 8443
     - name: rbd-app-ui
-      hosts:
-        - 8.130.141.31
       match:
+        hosts:
+          - 8.130.141.31
         paths:
           - /*
       backends:
