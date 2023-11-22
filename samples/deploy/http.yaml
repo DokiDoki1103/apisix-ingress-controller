@@ -6,12 +6,16 @@ spec:
   http:
     - name: rbd-api
       match:
+        hosts:
+          - rbd-api-api
         paths:
           - /*
       backends:
         - serviceName: rbd-api-api
           servicePort: 8443
     - name: rbd-app-ui
+      hosts:
+        - 8.130.141.31
       match:
         paths:
           - /*
@@ -20,6 +24,8 @@ spec:
           servicePort: 7070
     - name: rbd-api-healthz
       match:
+        hosts:
+          - 8.130.141.31
         paths:
           - /*
       backends:
@@ -27,6 +33,8 @@ spec:
           servicePort: 8889
     - name: rbd-ws
       match:
+        hosts:
+          - 8.130.141.31
         paths:
           - /*
       backends:
