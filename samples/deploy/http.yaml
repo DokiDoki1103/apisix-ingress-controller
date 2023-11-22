@@ -5,18 +5,30 @@ metadata:
 spec:
   http:
     - name: rbd-api
+      match:
+        paths:
+          - /*
       backends:
         - serviceName: rbd-api-api
           servicePort: 8443
     - name: rbd-app-ui
+      match:
+        paths:
+          - /*
       backends:
         - serviceName: rbd-app-ui
           servicePort: 7070
     - name: rbd-api-healthz
+      match:
+        paths:
+          - /*
       backends:
         - serviceName: rbd-api-healthz
           servicePort: 8889
     - name: rbd-ws
+      match:
+        paths:
+          - /*
       backends:
         - serviceName: rbd-api-websocket
           servicePort: 6060
