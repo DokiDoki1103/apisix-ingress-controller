@@ -249,14 +249,16 @@ data:
         enable: true
         listen:
           - port: 443
+          - port: 8443
       enable_control: true
       enable_reuseport: true
       node_listen:
         - 80
+        - 7070
+        - 8889
       stream_proxy:
         tcp:
-          - addr: "0.0.0.0:7070"
-          - addr: "0.0.0.0:8443"  
+          - addr: "0.0.0.0:6060"
 
 
     plugins: # plugin list (sorted by priority)
