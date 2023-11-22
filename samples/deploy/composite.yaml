@@ -261,7 +261,13 @@ data:
           - addr: 7070
           - addr: 8889
           - addr: 6060
-          
+          - addr: 10000  
+          - addr: 10001
+          - addr: 10002
+          - addr: 10003
+          - addr: 10004
+    
+    
     
     plugins: # plugin list (sorted by priority)
       - real-ip                        # priority: 23000

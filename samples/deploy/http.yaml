@@ -4,40 +4,12 @@ metadata:
   name: rbd-http-routes
 spec:
   http:
-    - name: rbd-api
+    - name: rbd-hub
       match:
         hosts:
-          - rbd-api-api:8443
+          - goodrain.me
         paths:
           - /*
       backends:
-        - serviceName: rbd-api-api
-          servicePort: 8443
-    - name: rbd-app-ui
-      match:
-        hosts:
-          - 8.130.141.31:7070
-        paths:
-          - /*
-      backends:
-        - serviceName: rbd-app-ui
-          servicePort: 7070
-    - name: rbd-api-healthz
-      match:
-        hosts:
-          - 8.130.141.31:8889
-        paths:
-          - /*
-      backends:
-        - serviceName: rbd-api-healthz
-          servicePort: 8889
-    - name: rbd-ws
-      match:
-        hosts:
-          - 8.130.141.31:6060
-        paths:
-          - /*
-      backends:
-        - serviceName: rbd-api-websocket
-          servicePort: 6060
-      websocket: true
+        - serviceName: rbd-hub
+          servicePort: 5000
