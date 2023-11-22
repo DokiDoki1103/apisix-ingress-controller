@@ -256,10 +256,13 @@ data:
         - 80
       stream_proxy:
         tcp:
-          - 7070
-          - 8889
-          - 6060
-
+          - addr: 8443
+            tls: true
+          - addr: 7070
+          - addr: 8889
+          - addr: 6060
+          
+    
     plugins: # plugin list (sorted by priority)
       - real-ip                        # priority: 23000
       - ai                             # priority: 22900
