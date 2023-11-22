@@ -7,7 +7,7 @@ spec:
     - name: rbd-api
       match:
         hosts:
-          - rbd-api-api:8443
+          - "rbd-api-api:8443"
         paths:
           - /*
       backends:
