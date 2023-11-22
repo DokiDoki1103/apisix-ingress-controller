@@ -1,0 +1,23 @@
+apiVersion: apisix.apache.org/v2
+kind: ApisixRoute
+metadata:
+  name: rbd-http-routes
+spec:
+  http:
+    - name: rbd-api
+      backends:
+        - serviceName: rbd-api-api
+          servicePort: 8443
+    - name: rbd-app-ui
+      backends:
+        - serviceName: rbd-app-ui
+          servicePort: 7070
+    - name: rbd-api-healthz
+      backends:
+        - serviceName: rbd-api-healthz
+          servicePort: 8889
+    - name: rbd-ws
+      backends:
+        - serviceName: rbd-api-websocket
+          servicePort: 6060
+      websocket: true
