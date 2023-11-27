@@ -35,3 +35,18 @@ spec:
       backend:
         serviceName: rbd-api-websocket
         servicePort: 6060
+
+---
+apiVersion: apisix.apache.org/v2
+kind: ApisixRoute
+metadata:
+  name: db-route
+spec:
+  stream:
+    - name: rbd-ws
+      protocol: TCP
+      match:
+        ingressPort: 10000
+      backend:
+        serviceName: rbd-db-rw
+        servicePort: 3306

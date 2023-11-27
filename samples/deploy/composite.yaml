@@ -365,7 +365,6 @@ metadata:
   name: ingress-apisix-composite-deployment
   namespace: ingress-apisix
 spec:
-
   selector:
     matchLabels:
       app.kubernetes.io/name: ingress-apisix-composite-deployment
@@ -410,8 +409,6 @@ spec:
             - ""
             - "--disable-status-updates=false"
             - "--etcd-server-enabled=true"
-
-
           env:
             - name: SERVICE_ID
               value: api-gateway
@@ -431,7 +428,7 @@ spec:
           imagePullPolicy: IfNotPresent
 
         - name: apisix
-          image: apache/apisix
+          image: apache/apisix:3.7.0-debian
           securityContext:
             runAsUser: 0
             privileged: true
