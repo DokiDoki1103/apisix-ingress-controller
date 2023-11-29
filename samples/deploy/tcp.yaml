@@ -50,3 +50,10 @@ spec:
       backend:
         serviceName: rbd-db-rw
         servicePort: 3306
+    - name: rbd-monitor
+      protocol: TCP
+      match:
+        ingressPort: 10001
+      backend:
+        serviceName: rbd-monitor
+        servicePort: 9999
