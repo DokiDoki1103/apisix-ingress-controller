@@ -44,6 +44,17 @@ spec:
       backends:
         - serviceName: rbd-hub
           servicePort: 5000
+    - name: rbd-app-ui
+      match:
+        exprs:
+          - subject: "server_port"
+            op: Equal
+            value: 7070
+        paths:
+          - /*
+      backends:
+        - serviceName: rbd-app-ui
+          servicePort: 7070
 ---
 apiVersion: apisix.apache.org/v2
 kind: ApisixTls

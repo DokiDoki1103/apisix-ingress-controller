@@ -1,7 +1,7 @@
 apiVersion: apisix.apache.org/v2
 kind: ApisixRoute
 metadata:
-  name: tcp-route
+  name: rbd-tcp-route
 spec:
   stream:
     - name: rbd-api
@@ -17,7 +17,7 @@ spec:
       match:
         ingressPort: 7070
       backend:
-        serviceName: rbd-app-ui
+        serviceName:
         servicePort: 7070
 
     - name: rbd-api-healthz

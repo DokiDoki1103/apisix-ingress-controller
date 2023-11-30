@@ -264,11 +264,11 @@ data:
       enable_reuseport: true
       node_listen:
         - 80
+        - 7070
       stream_proxy:
         tcp:
           - addr: 8443
             tls: true
-          - addr: 7070
           - addr: 8889
           - addr: 6060
           - addr: 10000  
