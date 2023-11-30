@@ -47,7 +47,9 @@ spec:
     - name: rbd-app-ui
       match:
         exprs:
-          - subject: "server_port"
+          - subject:
+              scope: ScopeHeader
+              name: server_port
             op: Equal
             value: 7070
         paths:
