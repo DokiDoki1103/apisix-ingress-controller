@@ -48,10 +48,10 @@ spec:
       match:
         exprs:
           - subject:
-              scope: ScopeHeader
+              scope: Variable
               name: server_port
             op: Equal
-            value: 7070
+            value: "7070"
         paths:
           - /*
       backends:
