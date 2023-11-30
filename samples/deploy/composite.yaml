@@ -477,6 +477,7 @@ spec:
 apiVersion: apisix.apache.org/v2
 kind: ApisixGlobalRule
 metadata:
+  namespace: rbd-system
   name: apisix-monitor
 spec:
   plugins:
@@ -489,6 +490,7 @@ spec:
 apiVersion: apisix.apache.org/v2
 kind: ApisixRoute
 metadata:
+  namespace: rbd-system
   name: rbd-http-routes
 spec:
   http:
@@ -505,6 +507,7 @@ spec:
 apiVersion: apisix.apache.org/v2
 kind: ApisixTls
 metadata:
+  namespace: rbd-system
   name: hub-image-repository
 spec:
   hosts:
