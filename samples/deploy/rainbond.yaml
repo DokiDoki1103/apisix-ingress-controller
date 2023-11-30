@@ -57,6 +57,47 @@ spec:
       backends:
         - serviceName: rbd-app-ui
           servicePort: 7070
+    - name: rbd-api
+      match:
+        exprs:
+          - subject:
+              scope: Variable
+              name: server_port
+            op: Equal
+            value: "8443"
+        paths:
+          - /*
+      backends:
+        - serviceName: rbd-api-api
+          servicePort: 8443
+    - name: rbd-api-healthz
+      match:
+        exprs:
+          - subject:
+              scope: Variable
+              name: server_port
+            op: Equal
+            value: "8889"
+        paths:
+          - /*
+      backends:
+        - serviceName: rbd-api-healthz
+          servicePort: 8889
+    - name: rbd-api-websocket
+      websocket: true
+      match:
+        exprs:
+          - subject:
+              scope: Variable
+              name: server_port
+            op: Equal
+            value: "6060"
+        paths:
+          - /*
+      backends:
+        - serviceName: rbd-api-websocket
+          servicePort: 6060
+
 ---
 apiVersion: apisix.apache.org/v2
 kind: ApisixTls

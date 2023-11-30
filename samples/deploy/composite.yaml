@@ -265,12 +265,10 @@ data:
       node_listen:
         - 80
         - 7070
+        - 8889
+        - 6060
       stream_proxy:
         tcp:
-          - addr: 8443
-            tls: true
-          - addr: 8889
-          - addr: 6060
           - addr: 10000  
           - addr: 10001
           - addr: 10002
@@ -453,7 +451,6 @@ spec:
       dnsPolicy: ClusterFirst
       serviceAccountName: apisix-view-serviceaccount
       serviceAccount: apisix-view-serviceaccount
-
       schedulerName: default-scheduler
   revisionHistoryLimit: 10
 
