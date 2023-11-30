@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: apisix-monitor
+  namespace: ingress-apisix
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 9091
+      targetPort: 9091
+  selector:
+    app.kubernetes.io/name: ingress-apisix-composite-deployment
+  type: ClusterIP
+
+---
+apiVersion: apisix.apache.org/v2
+kind: ApisixGlobalRule
+metadata:
+  namespace: rbd-system
+  name: apisix-monitor
+spec:
+  plugins:
+    - name: prometheus
+      enable: true
+      config:
+        prefer_name: true
+
+
+---
+apiVersion: apisix.apache.org/v2
+kind: ApisixRoute
+metadata:
+  namespace: rbd-system
+  name: rbd-http-routes
+spec:
+  http:
+    - name: rbd-hub
+      match:
+        hosts:
+          - goodrain.me
+        paths:
+          - /*
+      backends:
+        - serviceName: rbd-hub
+          servicePort: 5000
+---
+apiVersion: apisix.apache.org/v2
+kind: ApisixTls
+metadata:
+  namespace: rbd-system
+  name: hub-image-repository
+spec:
+  hosts:
+    - goodrain.me
+  secret:
+    name: hub-image-repository
+    namespace: rbd-system
