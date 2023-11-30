@@ -472,3 +472,27 @@ spec:
   selector:
     app.kubernetes.io/name: ingress-apisix-composite-deployment
   type: ClusterIP
+
+---
+apiVersion: apisix.apache.org/v2
+kind: ApisixGlobalRule
+metadata:
+  name: apisix-monitor
+spec:
+  plugins:
+    - name: prometheus
+      enable: true
+      config:
+        prefer_name: true
+
+---
+apiVersion: apisix.apache.org/v2
+kind: ApisixTls
+metadata:
+  name: hub-image-repository
+spec:
+  hosts:
+    - goodrain.me
+  secret:
+    name: hub-image-repository
+    namespace: rbd-system
