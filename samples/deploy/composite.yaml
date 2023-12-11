@@ -255,16 +255,16 @@ data:
         enable: true
         listen:
           - port: 443
-          - port: 8443
       enable_control: true
       enable_reuseport: true
       node_listen:
         - 80
-        - 7070
-        - 8889
-        - 6060
       stream_proxy:
         tcp:
+          - addr: 7070  
+          - addr: 8443
+          - addr: 8889
+          - addr: 6060
           - addr: 10000  
           - addr: 10001
           - addr: 10002
