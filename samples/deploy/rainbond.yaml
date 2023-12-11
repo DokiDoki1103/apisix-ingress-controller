@@ -32,8 +32,37 @@ apiVersion: apisix.apache.org/v2
 kind: ApisixRoute
 metadata:
   namespace: rbd-system
-  name: rbd-http-routes
+  name: rbd-default-routes
 spec:
+  stream:
+    - name: rbd-app-ui
+      protocol: TCP
+      match:
+        ingressPort: 7070
+      backend:
+        serviceName: rbd-app-ui
+        servicePort: 7070
+    - name: rbd-api
+      protocol: TCP
+      match:
+        ingressPort: 8443
+      backend:
+        serviceName: rbd-api-api
+        servicePort: 8443
+    - name: rbd-api-health
+      protocol: TCP
+      match:
+        ingressPort: 8889
+      backend:
+        serviceName: rbd-api-healthz
+        servicePort: 8889
+    - name: rbd-api-websocket
+      protocol: TCP
+      match:
+        ingressPort: 6060
+      backend:
+        serviceName: rbd-api-websocket
+        servicePort: 6060
   http:
     - name: rbd-hub
       match:
@@ -44,60 +73,6 @@ spec:
       backends:
         - serviceName: rbd-hub
           servicePort: 5000
-    - name: rbd-app-ui
-      match:
-        exprs:
-          - subject:
-              scope: Variable
-              name: server_port
-            op: Equal
-            value: "7070"
-        paths:
-          - /*
-      backends:
-        - serviceName: rbd-app-ui
-          servicePort: 7070
-    - name: rbd-api
-      match:
-        exprs:
-          - subject:
-              scope: Variable
-              name: server_port
-            op: Equal
-            value: "8443"
-        paths:
-          - /*
-      backends:
-        - serviceName: rbd-api-api
-          servicePort: 8443
-    - name: rbd-api-healthz
-      match:
-        exprs:
-          - subject:
-              scope: Variable
-              name: server_port
-            op: Equal
-            value: "8889"
-        paths:
-          - /*
-      backends:
-        - serviceName: rbd-api-healthz
-          servicePort: 8889
-    - name: rbd-api-websocket
-      websocket: true
-      match:
-        exprs:
-          - subject:
-              scope: Variable
-              name: server_port
-            op: Equal
-            value: "6060"
-        paths:
-          - /*
-      backends:
-        - serviceName: rbd-api-websocket
-          servicePort: 6060
-
 ---
 apiVersion: apisix.apache.org/v2
 kind: ApisixTls
@@ -110,3 +85,26 @@ spec:
   secret:
     name: hub-image-repository
     namespace: rbd-system
+
+---
+apiVersion: apisix.apache.org/v2
+kind: ApisixRoute
+metadata:
+  namespace: rbd-system
+  name: rbd-dev-routes
+spec:
+  stream:
+    - name: rbd-ws
+      protocol: TCP
+      match:
+        ingressPort: 10000
+      backend:
+        serviceName: rbd-db-rw
+        servicePort: 3306
+    - name: rbd-monitor
+      protocol: TCP
+      match:
+        ingressPort: 10001
+      backend:
+        serviceName: rbd-monitor
+        servicePort: 9999
