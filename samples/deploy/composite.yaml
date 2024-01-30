@@ -376,7 +376,7 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
-                  - key: name
+                  - key: kubernetes.io/hostname
                     operator: In
                     values:
                       - cn-shanghai.10.10.10.42
