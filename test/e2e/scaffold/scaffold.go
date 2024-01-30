@@ -63,7 +63,7 @@ type Options struct {
 	IngressClass                 string
 	EnableEtcdServer             bool
 
-	NamespaceSelectorLabel   map[string]string
+	NamespaceSelectorLabel   map[string][]string
 	DisableNamespaceSelector bool
 	DisableNamespaceLabel    bool
 }
@@ -452,11 +452,17 @@ func (s *Scaffold) beforeEach() {
 		Namespace:  s.namespace,
 	}
 	s.finalizers = nil
-
+	if s.label == nil {
+		s.label = make(map[string]string)
+	}
 	if s.opts.NamespaceSelectorLabel != nil {
-		s.label = s.opts.NamespaceSelectorLabel
+		for k, v := range s.opts.NamespaceSelectorLabel {
+			if len(v) > 0 {
+				s.label[k] = v[0]
+			}
+		}
 	} else {
-		s.label = map[string]string{"apisix.ingress.watch": s.namespace}
+		s.label["apisix.ingress.watch"] = s.namespace
 	}
 
 	var nsLabel map[string]string
@@ -474,6 +480,7 @@ func (s *Scaffold) beforeEach() {
 		s.DeployAdminaAPIMode()
 	}
 	s.DeployTestService()
+	s.DeployRetryTimeout()
 }
 
 func (s *Scaffold) DeployAdminaAPIMode() {
@@ -518,6 +525,21 @@ func (s *Scaffold) DeployCompositeMode() {
 
 	err = s.newAPISIXTunnels()
 	assert.Nil(s.t, err, "creating apisix tunnels")
+}
+
+func (s *Scaffold) DeployRetryTimeout() {
+	//Two endpoints are blocking(10 second) and one is non blocking
+	//Testing timeout
+	//With 1 retry and a timeout of 5 sec, it should return 504(timeout)
+	//With 1 retry and a timeout of 15 sec, it should success
+
+	//Testing retry
+	//With 1 retry and a timeout of 5 sec, it should return 504(timeout)
+	//With 2 retry and a timeout of 5 sec, it should success
+	err := s.NewDeploymentForRetryTimeoutTest()
+	assert.Nil(s.t, err, "error creating deployments for retry and timeout")
+	err = s.NewServiceForRetryTimeoutTest()
+	assert.Nil(s.t, err, "error creating services for retry and timeout")
 }
 
 func (s *Scaffold) DeployTestService() {
@@ -726,12 +748,20 @@ func (s *Scaffold) DeleteResource(resourceType, name string) error {
 
 func (s *Scaffold) NamespaceSelectorLabelStrings() []string {
 	var labels []string
-	for k, v := range s.label {
-		labels = append(labels, fmt.Sprintf("%s=%s", k, v))
+	if s.opts.NamespaceSelectorLabel != nil {
+		for k, v := range s.opts.NamespaceSelectorLabel {
+			for _, v0 := range v {
+				labels = append(labels, fmt.Sprintf("%s=%s", k, v0))
+			}
+		}
+	} else {
+		for k, v := range s.label {
+			labels = append(labels, fmt.Sprintf("%s=%s", k, v))
+		}
 	}
 	return labels
 }
 
-func (s *Scaffold) NamespaceSelectorLabel() map[string]string {
-	return s.label
+func (s *Scaffold) NamespaceSelectorLabel() map[string][]string {
+	return s.opts.NamespaceSelectorLabel
 }

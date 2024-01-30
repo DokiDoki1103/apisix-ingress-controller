@@ -31,6 +31,7 @@ import (
 	_const "github.com/apache/apisix-ingress-controller/pkg/kube/apisix/const"
 	"github.com/apache/apisix-ingress-controller/pkg/log"
 	"github.com/apache/apisix-ingress-controller/pkg/providers/translation"
+	"github.com/apache/apisix-ingress-controller/pkg/providers/utils"
 	apisixv1 "github.com/apache/apisix-ingress-controller/pkg/types/apisix/v1"
 )
 
@@ -101,8 +102,9 @@ func (t *translator) translateHTTPRouteV2(ctx *translation.TranslateContext, ar 
 					log.Debugw("Add new items, then override items with the same plugin key",
 						zap.Any("plugin", plugin.Name),
 						zap.String("secretRef", plugin.SecretRef))
+
 					for key, value := range sec.Data {
-						plugin.Config[key] = string(value)
+						utils.InsertKeyInMap(key, string(value), plugin.Config)
 					}
 				}
 				pluginMap[plugin.Name] = plugin.Config
@@ -169,7 +171,11 @@ func (t *translator) translateHTTPRouteV2(ctx *translation.TranslateContext, ar 
 		route.FilterFunc = part.Match.FilterFunc
 
 		if part.PluginConfigName != "" {
-			route.PluginConfigId = id.GenID(apisixv1.ComposePluginConfigName(ar.Namespace, part.PluginConfigName))
+			ns := ar.Namespace
+			if part.PluginConfigNamespace != "" {
+				ns = part.PluginConfigNamespace
+			}
+			route.PluginConfigId = id.GenID(apisixv1.ComposePluginConfigName(ns, part.PluginConfigName))
 		}
 
 		for k, v := range ar.ObjectMeta.Labels {
@@ -463,7 +469,11 @@ func (t *translator) generateHTTPRouteV2DeleteMark(ctx *translation.TranslateCon
 		route.Name = apisixv1.ComposeRouteName(ar.Namespace, ar.Name, part.Name)
 		route.ID = id.GenID(route.Name)
 		if part.PluginConfigName != "" {
-			route.PluginConfigId = id.GenID(apisixv1.ComposePluginConfigName(ar.Namespace, part.PluginConfigName))
+			ns := ar.Namespace
+			if part.PluginConfigNamespace != "" {
+				ns = part.PluginConfigNamespace
+			}
+			route.PluginConfigId = id.GenID(apisixv1.ComposePluginConfigName(ns, part.PluginConfigName))
 		}
 
 		ctx.AddRoute(route)
@@ -536,7 +546,7 @@ func (t *translator) translateStreamRouteV2(ctx *translation.TranslateContext, a
 						zap.Any("plugin", plugin.Name),
 						zap.String("secretRef", plugin.SecretRef))
 					for key, value := range sec.Data {
-						plugin.Config[key] = string(value)
+						utils.InsertKeyInMap(key, string(value), plugin.Config)
 					}
 				}
 				pluginMap[plugin.Name] = plugin.Config

@@ -18,6 +18,7 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"strconv"
 	"sync"
 	"time"
 
@@ -396,16 +397,20 @@ updateStatus:
 func (c *apisixRouteController) checkPluginNameIfNotEmptyV2(ctx context.Context, in *v2.ApisixRoute) error {
 	for _, v := range in.Spec.HTTP {
 		if v.PluginConfigName != "" {
-			_, err := c.APISIX.Cluster(c.Config.APISIX.DefaultClusterName).PluginConfig().Get(ctx, apisixv1.ComposePluginConfigName(in.Namespace, v.PluginConfigName))
+			ns := in.Namespace
+			if v.PluginConfigNamespace != "" {
+				ns = v.PluginConfigNamespace
+			}
+			_, err := c.APISIX.Cluster(c.Config.APISIX.DefaultClusterName).PluginConfig().Get(ctx, apisixv1.ComposePluginConfigName(ns, v.PluginConfigName))
 			if err != nil {
 				if err == apisixcache.ErrNotFound {
 					log.Errorw("checkPluginNameIfNotEmptyV2 error: plugin_config not found",
-						zap.String("name", apisixv1.ComposePluginConfigName(in.Namespace, v.PluginConfigName)),
+						zap.String("name", apisixv1.ComposePluginConfigName(ns, v.PluginConfigName)),
 						zap.Any("obj", in),
 						zap.Error(err))
 				} else {
 					log.Errorw("checkPluginNameIfNotEmptyV2 PluginConfig get failed",
-						zap.String("name", apisixv1.ComposePluginConfigName(in.Namespace, v.PluginConfigName)),
+						zap.String("name", apisixv1.ComposePluginConfigName(ns, v.PluginConfigName)),
 						zap.Any("obj", in),
 						zap.Error(err))
 				}
@@ -530,7 +535,9 @@ func (c *apisixRouteController) onAdd(obj interface{}) {
 func (c *apisixRouteController) onUpdate(oldObj, newObj interface{}) {
 	prev := kube.MustNewApisixRoute(oldObj)
 	curr := kube.MustNewApisixRoute(newObj)
-	if prev.ResourceVersion() >= curr.ResourceVersion() {
+	oldRV, _ := strconv.ParseInt(prev.ResourceVersion(), 0, 64)
+	newRV, _ := strconv.ParseInt(curr.ResourceVersion(), 0, 64)
+	if oldRV >= newRV {
 		return
 	}
 	// Updates triggered by status are ignored.
