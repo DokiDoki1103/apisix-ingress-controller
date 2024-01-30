@@ -86,25 +86,3 @@ spec:
     name: hub-image-repository
     namespace: rbd-system
 
----
-apiVersion: apisix.apache.org/v2
-kind: ApisixRoute
-metadata:
-  namespace: rbd-system
-  name: rbd-dev-routes
-spec:
-  stream:
-    - name: rbd-ws
-      protocol: TCP
-      match:
-        ingressPort: 10000
-      backend:
-        serviceName: rbd-db-rw
-        servicePort: 3306
-    - name: rbd-monitor
-      protocol: TCP
-      match:
-        ingressPort: 10001
-      backend:
-        serviceName: rbd-monitor
-        servicePort: 9999

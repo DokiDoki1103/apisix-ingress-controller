@@ -265,13 +265,6 @@ data:
           - addr: 8443
           - addr: 8889
           - addr: 6060
-          - addr: 10000  
-          - addr: 10001
-          - addr: 10002
-          - addr: 10003
-          - addr: 10004
-    
-    
     
     plugins: # plugin list (sorted by priority)
       - coraza-filter                  # priority: 7999
@@ -378,6 +371,15 @@ spec:
       labels:
         app.kubernetes.io/name: ingress-apisix-composite-deployment
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: name
+                    operator: In
+                    values:
+                      - cn-shanghai.10.10.10.42
       volumes:
         - name: apisix-config-yaml-configmap
           configMap:
@@ -386,7 +388,7 @@ spec:
 
       containers:
         - name: ingress-apisix
-          image: apache/apisix-ingress-controller:1.7.1
+          image: apache/apisix-ingress-controller:1.8.0
           securityContext:
             privileged: true
           command:
@@ -432,7 +434,7 @@ spec:
           imagePullPolicy: IfNotPresent
 
         - name: apisix
-          image: apache/apisix:dev
+          image: apache/apisix:3.8.0-debian
           securityContext:
             runAsUser: 0
             privileged: true

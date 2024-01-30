@@ -1,0 +1,14 @@
+apiVersion: apisix.apache.org/v2
+kind: ApisixRoute
+metadata:
+  namespace: rbd-system
+  name: rbd-api-api-inner
+spec:
+  stream:
+    - name: rbd-api-api-inner
+      protocol: TCP
+      match:
+        ingressPort: 10002
+      backend:
+        serviceName: rbd-api-api-inner
+        servicePort: 8888
