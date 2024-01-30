@@ -261,7 +261,7 @@ data:
         - 80
       stream_proxy:
         tcp:
-          - addr: 7070  
+          - addr: 7070
           - addr: 8443
           - addr: 8889
           - addr: 6060
