@@ -400,9 +400,9 @@ spec:
             - 1h
             - "--apisix-resource-sync-comparison=true"
             - "--http-listen"
-            - ":8080"
+            - ":7080"
             - "--https-listen"
-            - ":8443"
+            - ":7443"
             - "--default-apisix-cluster-name"
             - default
             - "--default-apisix-cluster-base-url"
