@@ -72,10 +72,12 @@ type ApisixRouteHTTP struct {
 	// Upstreams refer to ApisixUpstream CRD
 	Upstreams []ApisixRouteUpstreamReference `json:"upstreams,omitempty" yaml:"upstreams,omitempty"`
 
-	Websocket        bool                      `json:"websocket" yaml:"websocket"`
-	PluginConfigName string                    `json:"plugin_config_name,omitempty" yaml:"plugin_config_name,omitempty"`
-	Plugins          []ApisixRoutePlugin       `json:"plugins,omitempty" yaml:"plugins,omitempty"`
-	Authentication   ApisixRouteAuthentication `json:"authentication,omitempty" yaml:"authentication,omitempty"`
+	Websocket        bool   `json:"websocket" yaml:"websocket"`
+	PluginConfigName string `json:"plugin_config_name,omitempty" yaml:"plugin_config_name,omitempty"`
+	//By default, PluginConfigNamespace will be the same as the namespace of ApisixRoute
+	PluginConfigNamespace string                    `json:"plugin_config_namespace,omitempty" yaml:"plugin_config_namespace,omitempty"`
+	Plugins               []ApisixRoutePlugin       `json:"plugins,omitempty" yaml:"plugins,omitempty"`
+	Authentication        ApisixRouteAuthentication `json:"authentication,omitempty" yaml:"authentication,omitempty"`
 }
 
 // ApisixRouteHTTPBackend represents an HTTP backend (a Kubernetes Service).
@@ -784,8 +786,9 @@ type ApisixSecret struct {
 
 // ApisixMutualTlsClientConfig describes the mutual TLS CA and verify depth
 type ApisixMutualTlsClientConfig struct {
-	CASecret ApisixSecret `json:"caSecret,omitempty" yaml:"caSecret,omitempty"`
-	Depth    int          `json:"depth,omitempty" yaml:"depth,omitempty"`
+	CASecret         ApisixSecret `json:"caSecret,omitempty" yaml:"caSecret,omitempty"`
+	Depth            int          `json:"depth,omitempty" yaml:"depth,omitempty"`
+	SkipMTLSUriRegex []string     `json:"skip_mtls_uri_regex,omitempty" yaml:"skip_mtls_uri_regex, omitempty"`
 }
 
 // +genclient

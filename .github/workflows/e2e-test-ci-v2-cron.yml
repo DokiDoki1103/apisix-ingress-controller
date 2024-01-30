@@ -24,7 +24,7 @@ on:
   pull_request:
     branches:
       - master
-      - 1.7.0
+      - 1.8.0
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-v2
@@ -113,6 +113,7 @@ jobs:
             ${REGISTRY}/apisix-ingress-controller:dev \
             ${REGISTRY}/httpbin:dev \
             ${REGISTRY}/test-backend:dev \
+            ${REGISTRY}/test-timeout:dev \
             ${REGISTRY}/echo-server:dev \
             ${REGISTRY}/busybox:dev \
             | pigz > docker-v2.tar.gz
@@ -197,4 +198,5 @@ jobs:
           E2E_FLAKE_ATTEMPTS: "2"
           E2E_ENV: "ci"
         run: |
+          echo ${E2E_FOCUS} | grep "suite-cluster" && export E2E_NODES=1
           make e2e-test
